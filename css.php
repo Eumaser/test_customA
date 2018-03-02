@@ -4,13 +4,14 @@
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!---<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">--->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    
+
     <link rel="stylesheet" href="<?php echo include_webroot;?>plugins/datatables/dataTables.bootstrap.css">
     <link rel="stylesheet" href="<?php echo include_webroot;?>plugins/datepicker/datepicker3.css">
-    
+
     <!-- Bootstrap time Picker -->
     <link rel="stylesheet" href="<?php echo include_webroot;?>plugins/timepicker/bootstrap-timepicker.min.css">
      <!-- iCheck -->
@@ -23,8 +24,8 @@
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="<?php echo include_webroot;?>dist/css/skins/_all-skins.css">
     <link rel="stylesheet" href="<?php echo include_webroot;?>/plugins/fullcalendar/fullcalendar.min.css" rel='stylesheet' >
-    <link rel="stylesheet" href="<?php echo include_webroot;?>/plugins/fullcalendar/fullcalendar.print.css" media="print">  
-    
+    <link rel="stylesheet" href="<?php echo include_webroot;?>/plugins/fullcalendar/fullcalendar.print.css" media="print">
+
     <!--<link rel="stylesheet" href="<?php echo include_webroot;?>dist/css/rateit.css">-->
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -73,7 +74,7 @@
     input.error,textarea.error,select.error{
         border: 1px solid red !important;
     }
-    
+
     /* Alert Boxes
 =================================================================== */
 .alert {
@@ -262,7 +263,7 @@ div.tab button.active {
 }
 
 .btn-client{
-    width:26px; 
+    width:26px;
     height:26px;
     border-radius: 20px;
     padding: 0px;
@@ -339,7 +340,7 @@ div.tab button.active {
 
 /* Add animation (fade in the popup) */
 @-webkit-keyframes fadeIn {
-    from {opacity: 0;} 
+    from {opacity: 0;}
     to {opacity: 1;}
 }
 
