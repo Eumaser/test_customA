@@ -14,12 +14,12 @@ class Location {
     public function Location(){
         include_once 'class/SelectControl.php';
         $this->select = new SelectControl();
-        
+
 
     }
     public function create(){
-        $table_field = array('location_title','location_postal_code','location_unit_no','location_address','location_desc','location_status');
-        $table_value = array($this->location_title,$this->location_postal_code,$this->location_unit_no,$this->location_address,$this->location_desc,$this->location_status);
+        $table_field = array('location_title','location_postal_code','location_address','location_desc','location_type','location_status');
+        $table_value = array($this->location_title,$this->location_postal_code,$this->location_address,$this->location_desc,$this->location_type,$this->location_status);
         $remark = "Insert Location.";
         if(!$this->save->SaveData($table_field,$table_value,'db_location','location_id',$remark)){
            return false;
@@ -29,8 +29,11 @@ class Location {
         }
     }
     public function update(){
-        $table_field = array('location_title','location_postal_code','location_unit_no','location_address','location_desc','location_status');
-        $table_value = array($this->location_title,$this->location_postal_code,$this->location_unit_no,$this->location_address,$this->location_desc,$this->location_status);
+      //  $table_field = array('location_title','location_postal_code','location_unit_no','location_address','location_desc','location_status');
+    //    $table_value = array($this->location_title,$this->location_postal_code,$this->location_unit_no,$this->location_address,$this->location_desc,$this->location_status);
+      $table_field = array('location_title','location_postal_code','location_address','location_desc','location_type','location_status');
+      $table_value = array($this->location_title,$this->location_postal_code,$this->location_address,$this->location_desc,$this->location_type,$this->location_status);
+
         $remark = "Update Location.";
         if(!$this->save->UpdateData($table_field,$table_value,'db_location','location_id',$remark,$this->location_id)){
            return false;
@@ -50,7 +53,8 @@ class Location {
             $this->location_address = $row['location_address'];
             $this->location_desc = $row['location_desc'];
             $this->location_status = $row['location_status'];
-                   
+            $this->location_type = $row['location_type'];
+
         }
         return $query;
     }
@@ -62,9 +66,12 @@ class Location {
         }
     }
     public function getInputForm($action){
+
+        $this->loctype_ctrl= $this->select->getLocType($this->location_type,'Y');
+
         global $mandatory;
         if($this->location_id < 1){
-            $this->location_status = 1; 
+            $this->location_status = 1;
         }
     ?>
    <html>
@@ -74,8 +81,8 @@ class Location {
     <title>Location Management</title>
     <?php
     include_once 'css.php';
-    
-    ?>    
+
+    ?>
   </head>
   <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
   <body class="hold-transition skin-blue sidebar-mini">
@@ -98,7 +105,7 @@ class Location {
                 <button type = "button" class="btn btn-info pull-right radius_button" style = 'width:150px;margin-right:10px;' onclick = "window.location.href='location.php?action=createForm'"> + Add Location</button>
                 <?php }?>
               </div>
-                
+
                 <form id = 'location_form' class="form-horizontal" action = 'location.php?action=create' method = "POST">
                   <div class="box-body">
                     <div class="form-group">
@@ -113,34 +120,36 @@ class Location {
                               <option value = '0' <?php if($this->location_status == 0){ echo 'SELECTED';}?>>In-Active</option>
                          </select>
                       </div>
-                    </div> 
+                    </div>
                     <div class="form-group">
                       <label for="location_postal_code" class="col-sm-2 control-label">Postal Code <?php echo $mandatory?></label>
                       <div class="col-sm-3">
                         <input type="text" class="form-control" onkeyup="checkEnter()"  id="location_postal_code" name="location_postal_code" value = "<?php echo $this->location_postal_code;?>" placeholder="Postal Code">
                       </div>
-                      <label for="location_unit_no" class="col-sm-2 control-label">Unit Number <?php // echo $mandatory?></label>
+                      <label for="location_unit_no" class="col-sm-2 control-label">Location Type <?php // echo $mandatory?></label>
                       <div class="col-sm-3">
-                        <input type="text" class="form-control" id="location_unit_no" name="location_unit_no" value = "<?php echo $this->location_unit_no;?>" placeholder="Unit Number">
+                        <select class="form-control" id="location_type" name="location_type">
+                            <?php echo $this->loctype_ctrl?>
+                        </select>
                       </div>
-                    </div> 
+                    </div>
                     <div class="form-group">
                       <label for="location_address" class="col-sm-2 control-label">Address <?php echo $mandatory?></label>
                       <div class="col-sm-3">
                             <textarea class="form-control" rows="3" id="location_address" name="location_address" placeholder="Address" readonly><?php echo $this->location_address;?></textarea>
-                      </div>                        
+                      </div>
                       <label for="location_desc" class="col-sm-2 control-label">Description</label>
                       <div class="col-sm-3">
                             <textarea class="form-control" rows="3" id="location_desc" name="location_desc" placeholder="Description"><?php echo $this->location_desc;?></textarea>
                       </div>
-                    </div>                 
+                    </div>
                   </div><!-- /.box-body -->
                   <div class="box-footer">
                     <button type="button" class="btn btn-default radius_button" onclick = "history.go(-1)">Back</button>
                     &nbsp;&nbsp;&nbsp;
                     <input type = "hidden" value = "<?php echo $action;?>" name = "action"/>
                     <input type = "hidden" value = "<?php echo $this->location_id;?>" name = "location_id"/>
-                    <?php 
+                    <?php
                     if($this->location_id > 0){
                         $prm_code = "update";
                     }else{
@@ -158,12 +167,12 @@ class Location {
     </div><!-- ./wrapper -->
     <?php
     include_once 'js.php';
-    
+
     ?>
     <script>
     $(document).ready(function() {
         $("#location_form").validate({
-                  rules: 
+                  rules:
                   {
                       location_title:
                       {
@@ -178,7 +187,7 @@ class Location {
                           required: true
                       },
                       location_address:
-                      { 
+                      {
                           required: true
                       },
                   },
@@ -202,11 +211,11 @@ class Location {
                       }
                   }
               });
-    
-    
+
+
 });
     </script>
-    
+
 <script type = "text/javascript">
 			function checkEnter() {
 				var x =  document.getElementById('location_postal_code').value;
@@ -220,8 +229,8 @@ class Location {
 									jQuery.each(value, function (i, object) {
 										jQuery.each(object, function (subI, subObject) {
 											if (subI == 'ADDRESS'){
-												jQuery('#location_address').val(subObject); 
-											} 
+												jQuery('#location_address').val(subObject);
+											}
 										});
 									});
 								}
@@ -230,13 +239,13 @@ class Location {
 				}
 				Cloud();
 			}
-</script>    
-    
-    
+</script>
+
+
   </body>
 </html>
         <?php
-        
+
     }
     public function getListing(){
     ?>
@@ -247,7 +256,7 @@ class Location {
     <title>Location Management</title>
     <?php
     include_once 'css.php';
-    
+
     ?>
   </head>
   <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
@@ -287,7 +296,7 @@ class Location {
                       </tr>
                     </thead>
                     <tbody>
-                    <?php   
+                    <?php
                       $sql = "SELECT *
                               FROM db_location
                               WHERE location_id > 0 AND location_status = '1' ORDER BY location_title DESC";
@@ -303,12 +312,12 @@ class Location {
                             <td><?php echo $row['location_address'];?></td>
                             <td></td>
                             <td class = "text-align-right">
-                                <?php 
+                                <?php
                                 if(getWindowPermission($_SESSION['m'][$_SESSION['empl_id']],'update')){
                                 ?>
                                 <button type="button" class="btn btn-primary btn-info small_radius_button" onclick = "location.href = 'location.php?action=edit&location_id=<?php echo $row['location_id'];?>'">Edit</button>
                                 <?php }?>
-                                <?php 
+                                <?php
                                 if(getWindowPermission($_SESSION['m'][$_SESSION['empl_id']],'delete')){
                                 ?>
                                 <button type="button" class="btn btn-primary btn-danger small_radius_button" onclick = "confirmAlertHref('location.php?action=delete&location_id=<?php echo $row['location_id'];?>','Confirm Delete?')">Delete</button>
@@ -317,7 +326,7 @@ class Location {
                                  ?>
                             </td>
                         </tr>
-                    <?php    
+                    <?php
                         $i++;
                       }
                     ?>
