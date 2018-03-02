@@ -2,7 +2,7 @@
     include_once 'connect.php';
     include_once 'config.php';
     include_once 'include_function.php';
-    include_once 'class/Location.php'; 
+    include_once 'class/Location.php';
     include_once 'class/SavehandlerApi.php';
     include_once 'class/GeneralFunction.php';
     $o = new Location();
@@ -19,6 +19,7 @@
     $o->location_desc = escape($_POST['location_desc']);
     $o->location_status = escape($_POST['location_status']);
     $o->location_close = $_POST['close'];
+    $o->location_type =  escape($_POST['location_type']);
     
     switch ($action) {
         case "create":
@@ -44,7 +45,7 @@
                 rediectUrl("location.php?action=edit&location_id=$o->location_id",getSystemMsg(0,'Update data fail'));
             }
             exit();
-            break;  
+            break;
         case "edit":
             if($o->fetchLocationDetail(" AND location_id = '$o->location_id'","","",1)){
                 $o->getInputForm("update");
@@ -52,7 +53,7 @@
                rediectUrl("location.php",getSystemMsg(0,'Fetch Data fail'));
             }
             exit();
-            break;  
+            break;
         case "delete":
             if($o->delete()){
                 $_SESSION['status_alert'] = 'alert-success';
@@ -64,11 +65,11 @@
                 rediectUrl("location.php",getSystemMsg(0,'Delete data fail'));
             }
             exit();
-            break;   
+            break;
         case "createForm":
             $o->getInputForm('create');
             exit();
-            break;   
+            break;
         case "validate_email":
             $t = $gf->checkDuplicate("location",'location_login_email',$o->location_login_email,'location_id',$o->location_id);
             if($t > 0){
@@ -77,11 +78,9 @@
                 echo "true";
             }
             exit();
-            break;  
-        default: 
+            break;
+        default:
             $o->getListing();
             exit();
             break;
     }
-
-
