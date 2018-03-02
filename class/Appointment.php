@@ -76,7 +76,8 @@ class Appointment {
         $view = $_GET['view'];
         $this->appointment_servicetypeCrtl = $this->select->getServiceTypeSelectCtrl($this->appointment_service_type);
         $this->appointment_locationCrtl = $this->select->getLocationSelectCtrl($this->appointment_location);
-        $this->appointment_inchargePersonCrtl = $this->select->getPersonInchargeCtrl($this->appointment_incharge_person);
+        //Not exisiting causing error and that said error not being displayed
+      //  $this->appointment_inchargePersonCrtl = $this->select->getPersonInchargeCtrl($this->appointment_incharge_person);
     ?>
    <html>
   <head>
@@ -85,8 +86,8 @@ class Appointment {
     <title>Appointment Details Management</title>
     <?php
     include_once 'css.php';
-    
-    ?>    
+
+    ?>
   </head>
   <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
     <body class="hold-transition skin-blue sidebar-mini">
@@ -109,7 +110,7 @@ class Appointment {
                 <button type = "button" class="btn btn-primary pull-right" style = 'width:150px;margin-right:10px;' onclick = "window.location.href='appointment.php?action=createForm'">Create New</button>
                 <?php }?>
               </div>
-                
+
                 <form id = 'appointment_form' class="form-horizontal" action = 'appointment.php?action=create' method = "POST">
                   <div class="box-body">
                         <div class="form-group">
@@ -117,25 +118,25 @@ class Appointment {
                           <div class="col-sm-3">
                             <input type="text" class="form-control" id="appointment_name" name="appointment_name" placeholder="Name" value = "<?php echo $this->appointment_name;?>" <?php if($view == 1){echo "readonly"; }?>>
                           </div>
-                        </div>  
+                        </div>
                         <div class="form-group">
                           <label for="appointment_telephone" class="col-sm-2 control-label">Appointment Telephone</label>
                           <div class="col-sm-3">
                             <input type="text" class="form-control" id="appointment_telephone" name="appointment_telephone" placeholder="Telephone" value = "<?php echo $this->appointment_telephone;?>" <?php if($view == 1){echo "readonly"; }?>>
                           </div>
-                        </div>   
+                        </div>
                         <div class="form-group">
                           <label for="appointment_email" class="col-sm-2 control-label">Appointment Email</label>
                           <div class="col-sm-3">
                             <input type="text" class="form-control" id="appointment_email" name="appointment_email" placeholder="Email" value = "<?php echo $this->appointment_email;?>" <?php if($view == 1){echo "readonly"; }?>>
                           </div>
-                        </div> 
+                        </div>
                         <div class="form-group">
                           <label for="appointment_nric" class="col-sm-2 control-label">Appointment NRIC / FIN</label>
                           <div class="col-sm-3">
                             <input type="text" class="form-control" id="appointment_nric" name="appointment_nric" placeholder="NRIC" value = "<?php echo $this->appointment_nric;?>" <?php if($view == 1){echo "readonly"; }?>>
                           </div>
-                        </div>  
+                        </div>
 <!--                        <div class="form-group">
                           <label for="appointment_person" class="col-sm-2 control-label">Appointment Total Person</label>
                           <div class="col-sm-3">
@@ -149,7 +150,7 @@ class Appointment {
                                   <?php echo $this->appointment_servicetypeCrtl;?>
                            </select>
                           </div>
-                        </div>                       
+                        </div>
                         <div class="form-group">
                           <label for="appointment_location" class="col-sm-2 control-label">Appointment Location  <?php echo $mandatory ?></label>
                           <div class="col-sm-3">
@@ -157,13 +158,13 @@ class Appointment {
                                   <?php echo $this->appointment_locationCrtl;?>
                            </select>
                           </div>
-                        </div>  
+                        </div>
                         <div class="form-group">
                           <label for="appointment_date" class="col-sm-2 control-label">Appointment Date  <?php echo $mandatory ?></label>
                           <div class="col-sm-3">
                               <input type="text" class="form-control datepicker" id="appointment_date" name="appointment_date" value = "<?php echo format_date($this->appointment_date);?>" placeholder="Date" <?php if($view == 1){echo "disabled"; }?>>
                           </div>
-                        </div>   
+                        </div>
                         <div class="form-group">
                           <label for="appointment_time" class="col-sm-2 control-label">Appointment Time  <?php echo $mandatory ?></label>
                             <div class="col-sm-3 input-group bootstrap-timepicker" style = 'float:left;padding-right: 15px;padding-left: 15px;'>
@@ -172,7 +173,7 @@ class Appointment {
                                     <i class="fa fa-clock-o"></i>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
                         <div class="form-group">
                           <label for="appointment_incharge_person" class="col-sm-2 control-label">Person in Charge </label>
                           <div class="col-sm-3">
@@ -180,7 +181,7 @@ class Appointment {
                                   <?php echo $this->appointment_inchargePersonCrtl;?>
                            </select>
                           </div>
-                        </div> 
+                        </div>
                     <?php if($this->appointment_id > 0){?>
                         <div class="form-group">
                           <label for="appointment_end_time" class="col-sm-2 control-label">Appointment End Time </label>
@@ -190,7 +191,7 @@ class Appointment {
                                     <i class="fa fa-clock-o"></i>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
                     <?php } ?>
                         <div class="form-group">
                             <label for="appointment_address" class="col-sm-2 control-label">Client Address and Remarks</label>
@@ -204,14 +205,15 @@ class Appointment {
                                   <textarea class="form-control" rows="3" id="appointment_remarks" name="appointment_remarks" placeholder="Remarks"><?php echo $this->appointment_remarks;?></textarea>
                             </div>
                         </div>
-                     
+
                   </div><!-- /.box-body -->
+
                   <div class="box-footer">
                     <button type="button" class="btn btn-default" onclick = "history.go(-1)">Back</button>
                     &nbsp;&nbsp;&nbsp;
                     <input type = "hidden" value = "<?php echo $action;?>" name = "action"/>
                     <input type = "hidden" value = "<?php echo $this->appointment_id;?>" name = "appointment_id"/>
-                    <?php 
+                    <?php
                     if($this->appointment_id > 0){
                         $prm_code = "update";
                     }else{
@@ -230,12 +232,12 @@ class Appointment {
     </div><!-- ./wrapper -->
     <?php
     include_once 'js.php';
-    
+
     ?>
     <script>
     $(document).ready(function() {
         $("#appointment_form").validate({
-                  rules: 
+                  rules:
                   {
                       appointment_name:
                       {
@@ -263,7 +265,7 @@ class Appointment {
 //                      },
 //                      appointment_incharge_person:
 //                      {
-//                          required: true      
+//                          required: true
 //                      }
                   },
                   messages:
@@ -294,18 +296,18 @@ class Appointment {
 //                      },
 //                      appointment_incharge_person:
 //                      {
-//                          required: "Please select one incharge person"    
+//                          required: "Please select one incharge person"
 //                      }
                   }
               });
-    
-    
+
+
 });
     </script>
   </body>
 </html>
         <?php
-        
+
     }
     public function getListing(){
     ?>
@@ -316,7 +318,7 @@ class Appointment {
     <title>Appointment Details Management</title>
     <?php
     include_once 'css.php';
-    
+
     ?>
   </head>
   <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
@@ -340,7 +342,7 @@ class Appointment {
                   <h3 class="box-title">Appointment Details Table</h3>
                 <?php if(getWindowPermission($_SESSION['m'][$_SESSION['empl_id']],'create')){?>
                 <button class="btn btn-primary pull-right"  onclick = "window.location.href='appointment.php?action=createForm'">Create New + </button>
-                <button class="btn btn-primary pull-right btn-success" style = 'margin-right:5px;' id = "confirm_btn">Confirm <i class="fa fa-fw fa-thumbs-up"></i></button> 
+                <button class="btn btn-primary pull-right btn-success" style = 'margin-right:5px;' id = "confirm_btn">Confirm <i class="fa fa-fw fa-thumbs-up"></i></button>
                 <?php }?>
                 </div><!-- /.box-header -->
                 <div class="box-body">
@@ -361,9 +363,9 @@ class Appointment {
                       </tr>
                     </thead>
                     <tbody>
-                    <?php   
+                    <?php
                       $sql = "SELECT *
-                              FROM db_appointment  
+                              FROM db_appointment
                               WHERE appointment_id > 0 ORDER BY insertDateTime DESC";
                       $query = mysql_query($sql);
                       $i = 1;
@@ -379,7 +381,7 @@ class Appointment {
                                         $sql2 = "SELECT service_title FROM db_servicestype WHERE service_id = '$row[appointment_service_type]'";
                                         $query2 = mysql_query($sql2);
                                         $row2 = mysql_fetch_array($query2);
-                                        echo $row2['service_title'];   
+                                        echo $row2['service_title'];
                                 ?>
                             </td>
                             <td><?php
@@ -389,23 +391,23 @@ class Appointment {
                                         $sql2 = "SELECT location_title FROM db_location WHERE location_id = '$row[appointment_location]'";
                                         $query2 = mysql_query($sql2);
                                         $row2 = mysql_fetch_array($query2);
-                                        echo $row2['location_title']; 
+                                        echo $row2['location_title'];
                                     }
                                 ?>
                             </td>
                             <td><?php echo $row['appointment_date'];?></td>
                             <td><?php echo $row['appointment_time'];?></td>
-                            <td><?php 
+                            <td><?php
                             if($row['appointment_confirm'] == 1){ echo "<b><font color = 'green' >Confirm</font></b>";}
                             else if($row['appointment_confirm'] == 2){ echo "<b><font color = 'red' >Rejected</font></b>";}
                             else if($row['appointment_confirm'] == 3){ echo "<b><font color = 'orange' >Cancel</font></b>";}
                             else { echo 'Pending';}?></td>
                             <td class = "text-align-right">
-                                <?php 
+                                <?php
 //                                if(getWindowPermission($_SESSION['m'][$_SESSION['empl_id']],'update')){
                                 ?>
                                 <!--<button type="button" class="btn btn-primary btn-info " onclick = "location.href = 'appointment.php?action=edit&appointment_id=<?php echo $row['appointment_id'];?>&view=1'">View</button>-->
-                                <?php 
+                                <?php
                                 if($row['appointment_confirm'] == 0 || $row['appointment_confirm'] == 3){?>
                                 <button type="button" class="btn btn-primary btn-danger " onclick = "confirmAlertHref('appointment.php?action=rejectAppointment&appointment_id=<?php echo $row['appointment_id'];?>','Confirm Reject?')">Rejected</button>
                                 <?php }?>
@@ -414,7 +416,7 @@ class Appointment {
                                 <?php // }?>
                             </td>
                         </tr>
-                    <?php    
+                    <?php
                         $i++;
                       }
                     ?>
@@ -458,11 +460,11 @@ class Appointment {
         });
 
       });
-      
+
       $('#confirm_btn').click(function(){
             var appointment_id = [];
             var appointment_status = [];
-            
+
             $('.appointment_checkbox_child').each(function(){
                 if($(this).is(':checked')){
                     appointment_id.push($(this).val());
@@ -470,7 +472,7 @@ class Appointment {
                 }
             });
             var data = "action=confirmedAppointment&appointment_array="+appointment_id+"&appointment_status_array="+appointment_status;
-            $.ajax({ 
+            $.ajax({
                 type: 'POST',
                 url: 'appointment.php',
                 cache: false,
@@ -484,10 +486,10 @@ class Appointment {
                    var jsonObj = eval ("(" + data + ")");
                    alert('Update success.');
                    location.reload();
-                }		
+                }
              });
         });
-        
+
         $('.appointment_checkbox_parent').click(function(){
                 if($(this).is(':checked')){
                     $('.appointment_checkbox_child').prop('checked',true);
@@ -495,7 +497,7 @@ class Appointment {
                     $('.appointment_checkbox_child').prop('checked',false);
                 }
 
-        });        
+        });
     </script>
   </body>
 </html>
@@ -523,19 +525,19 @@ class Appointment {
             $table_value = array(2);
             $remark = "Reject Appointment";
             $this->save->UpdateData($table_field,$table_value,'db_appointment','appointment_id',$remark,$id);
-            
+
             if($id != 2){
                 $this->fetchAppointmentData($id);
                 $this->sendAppointmentRejectEmail();
             }
-    }    
+    }
     public function cancelAppointment(){
             $id = $_GET['appointment_id'];
             $table_field = array('appointment_confirm');
             $table_value = array(3);
             $remark = "Reject Appointment";
             $this->save->UpdateData($table_field,$table_value,'db_appointment','appointment_id',$remark,$id);
-    }        
+    }
     public function getDuration($data){
         $sql = "SELECT service_duration FROM db_servicestype WHERE service_id = '$data' AND service_status = '1'";
         $query = mysql_query($sql);
@@ -546,7 +548,7 @@ class Appointment {
         $duration = $duration;
         $endtime = date("h:i A", strtotime($time." +".$duration." minutes"));
         return $endtime;
-    }    
+    }
     public function fetchAppointmentData($id) {
 
         $sql = "SELECT * FROM db_appointment WHERE appointment_id = '$id'";
@@ -578,22 +580,22 @@ class Appointment {
                 }else{
                     $this->location = "Decide by Hair+ Lab";
                 }
-                
-                
+
+
                 $sql2 = "SELECT service_title FROM db_servicestype WHERE service_id = '$this->appointment_service_type'";
                 $query2 = mysql_query($sql2);
                 $row2 = mysql_fetch_array($query2);
                 $this->service_type = $row2['service_title'];
-                
+
                 $sql2 = "SELECT empl_name FROM db_empl WHERE empl_id = '$this->appointment_incharge_person'";
                 $query2 = mysql_query($sql2);
                 $row2 = mysql_fetch_array($query2);
                 $this->staff_in_charge = $row2['empl_name'];
          }
     }
-    
+
     public function sendAppointmentConfirmEmail() {
-        
+
          if($this->noAppointment == ""){
                             $this->totalTrip;
                                 $subject = "HairPlus Lab - Confirm your Appointment";
@@ -631,7 +633,7 @@ class Appointment {
                                                 padding: 10px!important;
                                             }
                                             .bold{
-                                               font-weight: 600; 
+                                               font-weight: 600;
                                             }
                                             u b{
                                              font-size: 18px;
@@ -682,21 +684,21 @@ TEXT;
                                 $message .= "<tr><td $textLeft>E-mail Address</td><td>:</td><td $textLeft>".$this->appointment_email."</td></tr>";
                                 $message .= "<tr><td $textLeft>NRIC / FIN</td><td>:</td><td $textLeft>".$this->appointment_nric."</td></tr>";
                                 $message .= "<tr><td $textLeft>Location</td><td>:</td><td $textLeft>".$this->location."</td></tr>";
-                                
+
                                 if($this->location == 1){
                                     $message .= "<tr><td $textLeft>Address</td><td>:</td><td $textLeft>".$this->appointment_address."</td></tr>";
                                 }
                                 $message .= "</table></div><br>";
 
                                 $message .= "</body>";
-                                
+
                                 $sender_email =SENDER_EMAIL;
 
                                 require 'dist/PHPMailerAutoload.php';
 
                                 $mail = new PHPMailer;
 
-                                $mail->isSMTP();       
+                                $mail->isSMTP();
 
                                 $mail->setFrom($sender_email,"HairPlus Lab - ");
 
@@ -711,8 +713,8 @@ TEXT;
                                     return "Mailer Error: " . $mail->ErrorInfo;
                                 } else {
 
-                                    return true; 
-                                }          
+                                    return true;
+                                }
                         }
 
     }
@@ -755,7 +757,7 @@ TEXT;
                                                 padding: 10px!important;
                                             }
                                             .bold{
-                                               font-weight: 600; 
+                                               font-weight: 600;
                                             }
                                             u b{
                                              font-size: 18px;
@@ -788,13 +790,13 @@ TEXT;
                                             }
                                         </style></head>
 TEXT;
-                                
+
                                 if($this->staff_in_charge != ""){
                                     $staff_in_charge = $this->staff_in_charge;
                                 }else{
                                     $staff_in_charge = "No Special Request";
                                 }
-                                
+
                                 $message .= $style;
                                 $textLeft = "style=\"text-align:left;\"";
                                 $message .= "<body><div width=\"100%\" style=\"text-align:center;\"><img src=\"".EMAIL_LOGO."\" />";
@@ -812,7 +814,7 @@ TEXT;
                                     $message .= "<tr><td $textLeft>Address</td><td>:</td><td $textLeft>".$this->appointment_address."</td></tr>";
                                 }
                                 $message .= "</table></div><br>";
-                                                                
+
 
                                 $message .= "</body>";
 
@@ -822,7 +824,7 @@ TEXT;
 
                                 $mail = new PHPMailer;
 
-                                $mail->isSMTP();       
+                                $mail->isSMTP();
 
                                 $mail->setFrom($sender_email,"HairPlus Lab - ");
 
@@ -837,15 +839,15 @@ TEXT;
                                     return "Mailer Error: " . $mail->ErrorInfo;
                                 } else {
 
-                                    return true; 
-                                }              
-                        }        
-        
-        
+                                    return true;
+                                }
+                        }
+
+
 
     }
     public function sendAppointmentRejectEmail1() {
-        
+
          if($this->noAppointment == ""){
                             $this->totalTrip;
                                 $subject = "HairPlus Lab - Reject your Appointment";
@@ -883,7 +885,7 @@ TEXT;
                                                 padding: 10px!important;
                                             }
                                             .bold{
-                                               font-weight: 600; 
+                                               font-weight: 600;
                                             }
                                             u b{
                                              font-size: 18px;
@@ -916,13 +918,13 @@ TEXT;
                                             }
                                         </style></head>
 TEXT;
-                                
+
                                 if($this->staff_in_charge != ""){
                                     $staff_in_charge = $this->staff_in_charge;
                                 }else{
                                     $staff_in_charge = "No Special Request";
                                 }
-                                
+
                                 $message .= $style;
                                 $textLeft = "style=\"text-align:left;\"";
                                 $message .= "<body><div width=\"100%\" style=\"text-align:center;\"><img src=\"".EMAIL_LOGO."\" />";
@@ -940,13 +942,13 @@ TEXT;
                                     $message .= "<tr><td $textLeft>Address</td><td>:</td><td $textLeft>".$this->appointment_address."</td></tr>";
                                 }
                                 $message .= "</table></div><br>";
-                                                                
+
 
                                 $message .= "</body>";
                                 $headers  = "MIME-Version: 1.0" . PHP_EOL;
                                 $headers .= "Content-Type: text/html; charset=ISO-8859-1" . PHP_EOL;
                                 $headers .= "From: HairPlus Lab - ".SENDER_EMAIL;
-                                
+
                                 $status = mail($this->appointment_email, $subject, $message, $headers);
                         }
 
