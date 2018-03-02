@@ -12,7 +12,7 @@
  */
 class SelectControl {
     public function SelectControl(){
-     
+
     }
     public function getNationalitySelectCtrl($pid,$shownull="Y",$wherestring=''){
         $sql = "SELECT nationality_id,nationality_code from db_nationality WHERE (nationality_id = '$pid' or nationality_id >0) and nationality_status = 1 $wherestring
@@ -29,10 +29,54 @@ class SelectControl {
             }else{
                 $selected = "";
             }
-            $selectctrl .="<option value = '$id' $selected>$code</option>"; 
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
         }
         return $selectctrl;
     }
+
+    //edr Get All location type from loctype table
+    public function getLocType($pid,$shownull="Y",$wherestring=''){
+        $sql = "SELECT loctype_id,loctype_type from db_loctype WHERE (loctype_id = '$pid' or loctype_id >0)  $wherestring
+                ORDER BY loctype_type ASC";
+        if($shownull =="Y"){
+            $selectctrl .="<option value = '' SELECTED='SELECTED'>Select One</option>";
+        }
+        $query = mysql_query($sql);
+        while($row = mysql_fetch_array($query)){
+            $id = $row['loctype_id'];
+            $code = $row['loctype_type'];
+            if($id == $pid){
+                $selected = "SELECTED = 'SELECTED'";
+            }else{
+                $selected = "";
+            }
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
+        }
+        return $selectctrl;
+    }
+
+    //edr get all users that are salesperson in user/empl table user_group = 3
+    public function getSalesPerson($pid,$shownull="Y",$wherestring=''){
+
+        $sql = "SELECT empl_id,empl_name from db_empl WHERE (empl_id = '$pid' or empl_id >0) AND empl_group = 3 $wherestring ORDER BY empl_name ASC";
+        if($shownull =="Y"){
+            $selectctrl .="<option value = '' SELECTED='SELECTED'>Select One</option>";
+        }
+        $query = mysql_query($sql);
+        while($row = mysql_fetch_array($query)){
+            $id = $row['empl_id'];
+            $code = $row['empl_name'];
+            if($id == $pid){
+                $selected = "SELECTED = 'SELECTED'";
+            }else{
+                $selected = "";
+            }
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
+        }
+        return $selectctrl;
+    }
+
+
     public function getBankSelectCtrl($pid,$shownull="Y",$wherestring=''){
         $sql = "SELECT bank_id,bank_code from db_bank WHERE (bank_id = '$pid' or bank_id >0) and bank_status = 1 $wherestring
                 ORDER BY bank_seqno,bank_code ASC";
@@ -48,7 +92,7 @@ class SelectControl {
             }else{
                 $selected = "";
             }
-            $selectctrl .="<option value = '$id' $selected>$code</option>"; 
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
         }
         return $selectctrl;
     }
@@ -67,7 +111,7 @@ class SelectControl {
             }else{
                 $selected = "";
             }
-            $selectctrl .="<option value = '$id' $selected>$code</option>"; 
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
         }
         return $selectctrl;
     }
@@ -86,7 +130,7 @@ class SelectControl {
             }else{
                 $selected = "";
             }
-            $selectctrl .="<option value = '$id' $selected>$code</option>"; 
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
         }
         return $selectctrl;
     }
@@ -105,13 +149,13 @@ class SelectControl {
             }else{
                 $selected = "";
             }
-            $selectctrl .='<option value = "' . $id . '" ' . $selected . '>' . $code . '</option>'; 
+            $selectctrl .='<option value = "' . $id . '" ' . $selected . '>' . $code . '</option>';
         }
         return $selectctrl;
     }
     public function getEmployeeSelectCtrl($pid,$shownull="Y",$wherestring=''){
         $sql = "SELECT empl_id,CONCAT(empl_code,' - ',empl_name) as empl_name from db_empl WHERE (empl_id = '$pid' or empl_id >0) and empl_status = 1 and empl_client = '0' $wherestring
-                ORDER BY empl_seqno,empl_name ASC"; 
+                ORDER BY empl_seqno,empl_name ASC";
 
         if($shownull =="Y"){
             $selectctrl .="<option value = '' SELECTED='SELECTED'>Select One</option>";
@@ -125,13 +169,13 @@ class SelectControl {
             }else{
                 $selected = "";
             }
-            $selectctrl .="<option value = '$id' $selected>$code</option>"; 
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
         }
         return $selectctrl;
     }
     public function getSalesPersonCtrl($pid,$shownull="Y",$wherestring=''){
         $sql = "SELECT empl_id,CONCAT(empl_code,' - ',empl_name) as empl_name from db_empl WHERE (empl_id = '$pid' or empl_id >0) and empl_status = 1 and empl_client = '0' and (empl_group = '4' or empl_group = '8') $wherestring
-                ORDER BY empl_seqno,empl_name ASC"; 
+                ORDER BY empl_seqno,empl_name ASC";
 
         if($shownull =="Y"){
             $selectctrl .="<option value = '' SELECTED='SELECTED'>Select One</option>";
@@ -145,13 +189,13 @@ class SelectControl {
             }else{
                 $selected = "";
             }
-            $selectctrl .="<option value = '$id' $selected>$code</option>"; 
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
         }
         return $selectctrl;
     }
     public function getApprovedEmployeeSelectCtrl($pid,$shownull="Y",$wherestring=''){
         $sql = "SELECT empl_id,CONCAT(empl_code,' - ',empl_name) as empl_name from db_empl WHERE (empl_id = '$pid' or empl_id >0) and empl_status = 1 and empl_client = '0' and empl_group = '1' $wherestring
-                ORDER BY empl_seqno,empl_name ASC"; 
+                ORDER BY empl_seqno,empl_name ASC";
 
         if($shownull =="Y"){
             $selectctrl .="<option value = '' SELECTED='SELECTED'>Select One</option>";
@@ -165,10 +209,10 @@ class SelectControl {
             }else{
                 $selected = "";
             }
-            $selectctrl .="<option value = '$id' $selected>$code</option>"; 
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
         }
         return $selectctrl;
-    }    
+    }
     public function getGroupSelectCtrl($pid,$shownull="Y",$wherestring=''){
         $sql = "SELECT group_id,group_code from db_group WHERE (group_id = '$pid' or group_id >0) and group_status = 1 $wherestring
                 ORDER BY group_seqno,group_code ASC";
@@ -184,7 +228,7 @@ class SelectControl {
             }else{
                 $selected = "";
             }
-            $selectctrl .="<option value = '$id' $selected>$code</option>"; 
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
         }
 
         return $selectctrl;
@@ -204,7 +248,7 @@ class SelectControl {
             }else{
                 $selected = "";
             }
-            $selectctrl .="<option value = '$id' $selected>$code</option>"; 
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
         }
 
         return $selectctrl;
@@ -225,7 +269,7 @@ class SelectControl {
             }else{
                 $selected = "";
             }
-            $selectctrl .="<option value = '$id' $selected>$code</option>"; 
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
         }
         return $selectctrl;
     }
@@ -245,7 +289,7 @@ class SelectControl {
             }else{
                 $selected = "";
             }
-            $selectctrl .="<option value = '$id' $selected>$code</option>"; 
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
         }
         return $selectctrl;
     }
@@ -265,7 +309,7 @@ class SelectControl {
             }else{
                 $selected = "";
             }
-            $selectctrl .="<option value = '$id' $selected>$code</option>"; 
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
         }
         return $selectctrl;
     }
@@ -285,7 +329,7 @@ class SelectControl {
             }else{
                 $selected = "";
             }
-            $selectctrl .='<option value = "' . $id . '"' . $selected . ">$code</option>"; 
+            $selectctrl .='<option value = "' . $id . '"' . $selected . ">$code</option>";
         }
         return $selectctrl;
     }
@@ -304,7 +348,7 @@ class SelectControl {
             }else{
                 $selected = "";
             }
-            $selectctrl .="<option value = '$id' $selected>$code</option>"; 
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
         }
         return $selectctrl;
     }
@@ -323,7 +367,7 @@ class SelectControl {
             }else{
                 $selected = "";
             }
-            $selectctrl .="<option value = '$id' $selected>$code</option>"; 
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
         }
         return $selectctrl;
     }
@@ -342,7 +386,7 @@ class SelectControl {
             }else{
                 $selected = "";
             }
-            $selectctrl .="<option value = '$id' $selected>$code</option>"; 
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
         }
         return $selectctrl;
     }
@@ -361,7 +405,7 @@ class SelectControl {
             }else{
                 $selected = "";
             }
-            $selectctrl .="<option value = '$id' $selected>$code</option>"; 
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
         }
         return $selectctrl;
     }
@@ -380,16 +424,16 @@ class SelectControl {
             }else{
                 $selected = "";
             }
-            $selectctrl .="<option value = '$id' $selected>$code</option>"; 
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
         }
         return $selectctrl;
     }
     public function getEmplLeaveSelectCtrl($pid,$shownull="Y",$wherestring=''){
-        $sql = "SELECT lt.leavetype_id,lt.leavetype_code 
+        $sql = "SELECT lt.leavetype_id,lt.leavetype_code
                 from db_emplleave el
                 INNER JOIN db_leavetype lt ON lt.leavetype_id = el.emplleave_leavetype
                 WHERE (lt.leavetype_id = '$pid' or lt.leavetype_id >0) and lt.leavetype_status = 1 $wherestring
-                ORDER BY lt.leavetype_seqno,lt.leavetype_code ASC"; 
+                ORDER BY lt.leavetype_seqno,lt.leavetype_code ASC";
         if($shownull =="Y"){
             $selectctrl .="<option value = '' SELECTED='SELECTED'>Select One</option>";
         }
@@ -402,11 +446,11 @@ class SelectControl {
             }else{
                 $selected = "";
             }
-            $selectctrl .="<option value = '$id' $selected>$code</option>"; 
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
         }
         return $selectctrl;
     }
-    
+
     //license
     public function getLicenseTypeSelectCtrl($pid,$shownull="Y",$wherestring=''){
         $sql = "SELECT license_type_id, license_type_name FROM db_license_type where license_type_status = 1";
@@ -422,7 +466,7 @@ class SelectControl {
             }else{
                 $selected = "";
             }
-            $selectctrl .="<option value = '$id' $selected>$code</option>"; 
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
         }
 
         return $selectctrl;
@@ -453,7 +497,7 @@ class SelectControl {
         $sql = "SELECT empl_id, empl_manager FROM db_empl WHERE empl_id = '$empl_id'";
         $query = mysql_query($sql);
         $row = mysql_fetch_array($query);
-        
+
         $sql2 = "SELECT empl_id , empl_name FROM `db_empl` WHERE (empl_id = '$pid' or empl_id = '$row[empl_manager]')";
         if($shownull =="Y"){
             $selectctrl .="<option value = '' SELECTED='SELECTED'>Select $text</option>";
@@ -468,9 +512,9 @@ class SelectControl {
             else{
                 $selected = "";
             }
-            $selectctrl .="<option value = '$id' $selected>$code</option>"; 
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
         }
-        
+
         if ($pid != ""){
             $where = 'AND empl_id != $pid';
         }
@@ -483,12 +527,12 @@ class SelectControl {
             $id = $row2['empl_id'];
             $code = $row2['empl_name'];
 
-            $selectctrl .="<option value = '$id' $selected>$code</option>"; 
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
         }
-        
-        
+
+
         return $selectctrl;
-    }    
+    }
     public function getApplicantLeaveTypeSelectCtrl($pid,$shownull="Y",$wherestring=''){
         $sql = "SELECT leavetype_id,leavetype_code from db_leavetype INNER JOIN db_applleave ON leavetype_id = applleave_leavetype WHERE (leavetype_id = '$pid' or leavetype_id >0) and leavetype_status = 1 and applleave_appl = $_SESSION[empl_id] and applleave_disabled = '0' $wherestring
                 ORDER BY leavetype_seqno,leavetype_code ASC";
@@ -504,10 +548,10 @@ class SelectControl {
             }else{
                 $selected = "";
             }
-            $selectctrl .="<option value = '$id' $selected>$code</option>"; 
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
         }
         return $selectctrl;
-    }    
+    }
     public function getSHROutletSelectCtrl($pid,$shownull="Y",$wherestring='',$text = "One"){
         $sql = "SELECT outlet_id , outlet_name FROM `db_company_outlet` WHERE (outlet_id = '$pid' or outlet_id >0) ORDER BY outlet_seqno ASC";
         if($shownull =="Y"){
@@ -522,7 +566,7 @@ class SelectControl {
             }else{
                 $selected = "";
             }
-            $selectctrl .="<option value = '$id' $selected>$code</option>"; 
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
         }
         return $selectctrl;
     }
@@ -540,10 +584,10 @@ class SelectControl {
             }else{
                 $selected = "";
             }
-            $selectctrl .="<option value = '$id' $selected>$code</option>"; 
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
         }
         return $selectctrl;
-    }  
+    }
     public function getBPServiceTypeSelectCtrl($pid,$shownull="Y",$wherestring='',$text = "One"){
         $sql = "SELECT service_id , service_title FROM `db_servicestype` WHERE (service_id = '$pid' or service_id >0) AND service_status = '1'";
         if($shownull =="Y"){
@@ -558,12 +602,14 @@ class SelectControl {
             }else{
                 $selected = "";
             }
-            $selectctrl .="<option value = '$id' $selected>$code</option>"; 
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
         }
         return $selectctrl;
-    }   
+    }
+
+    //edr changed order by from location_seqno, which does not exist to location_title
     public function getLocationSelectCtrl($pid,$shownull="Y",$wherestring='',$text = "One"){
-        $sql = "SELECT location_id , location_title FROM `db_location` WHERE (location_id = '$pid' or location_id >0) AND location_status = '1' ORDER BY location_seqno";
+        $sql = "SELECT location_id , location_title FROM `db_location` WHERE (location_id = '$pid' or location_id >0) AND location_status = '1' ORDER BY location_title";
         if($shownull =="Y"){
             $selectctrl .="<option value = '' SELECTED='SELECTED'>Select $text</option>";
         }
@@ -576,11 +622,11 @@ class SelectControl {
             }else{
                 $selected = "";
             }
-            $selectctrl .="<option value = '$id' $selected>$code</option>"; 
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
         }
         return $selectctrl;
     }
-    
+
     public function getLocationCtrl($pid,$shownull="Y",$wherestring='',$text = "One"){
         $sql = "SELECT location_id , location_title FROM `db_location` WHERE (location_id = '$pid' or location_id >0) AND location_status = '1'";
         if($shownull =="Y"){
@@ -595,11 +641,11 @@ class SelectControl {
             }else{
                 $selected = "";
             }
-            $selectctrl .="<option value = '$id' $selected>$code</option>"; 
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
         }
         return $selectctrl;
     }
-    
+
     public function getBoothCtrl($pid,$own_id,$shownull="Y",$wherestring='',$text = "One"){
         $sql = "SELECT booth_id , booth_title FROM `db_booth` WHERE (booth_id = '$pid' or booth_id >0) AND booth_status = '1' AND booth_id != '$own_id'";
         if($shownull =="Y"){
@@ -614,7 +660,7 @@ class SelectControl {
             }else{
                 $selected = "";
             }
-            $selectctrl .="<option value = '$id' $selected>$code</option>"; 
+            $selectctrl .="<option value = '$id' $selected>$code</option>";
         }
         return $selectctrl;
     }
