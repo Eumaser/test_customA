@@ -18,7 +18,7 @@
 
     switch ($action) {
         case "create":
-
+        
             if($o->create()){
                 $_SESSION['status_alert'] = 'alert-success';
                 $_SESSION['status_msg'] = "Create success.";
