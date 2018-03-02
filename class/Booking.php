@@ -183,6 +183,7 @@ class Booking {
                             <input type="text" class="form-control" id="appointment_person" name="appointment_person" placeholder="Total Person" value = "<?php echo $this->appointment_person;?>" <?php if($view == 1){echo "readonly"; }?>>
                           </div>
                         </div>   -->
+                        <!----
                         <div class="form-group">
                           <label for="appointment_service_type" class="col-sm-2 control-label">Booking Service Type  <?php echo $mandatory ?></label>
                           <div class="col-sm-3">
@@ -191,6 +192,7 @@ class Booking {
                            </select>
                           </div>
                         </div>
+                        --->
                         <div class="form-group">
                           <label for="appointment_location" class="col-sm-2 control-label">Booking Location  <?php echo $mandatory ?></label>
                           <div class="col-sm-3">
@@ -402,7 +404,7 @@ class Booking {
                         <th style = 'width:10%'>Name</th>
                         <th style = 'width:10%'>Telephone</th>
                         <th style = 'width:10%'>Email</th>
-                        <th style = 'width:10%'>Service</th>
+
                         <th style = 'width:15%'>Location</th>
                         <th style = 'width:10%'>Date</th>
                         <th style = 'width:10%'>Time</th>
@@ -425,13 +427,7 @@ class Booking {
                             <td><?php echo $row['book_name'];?></td>
                             <td><?php echo $row['book_telephone'];?></td>
                             <td><?php echo $row['book_email'];?></td>
-                            <td><?php
-                                        $sql2 = "SELECT service_title FROM db_servicestype WHERE service_id = '$row[book_service_type]'";
-                                        $query2 = mysql_query($sql2);
-                                        $row2 = mysql_fetch_array($query2);
-                                        echo $row2['service_title'];
-                                ?>
-                            </td>
+
                             <td><?php
                                     if($row[appointment_location] == 1){
                                         echo $row['book_address'];
@@ -451,16 +447,14 @@ class Booking {
                             else if($row['book_confirm'] == 3){ echo "<b><font color = 'orange' >Cancel</font></b>";}
                             else { echo 'Pending';}?></td>
                             <td class = "text-align-right">
-                                <?php
-//                                if(getWindowPermission($_SESSION['m'][$_SESSION['empl_id']],'update')){
-                                ?>
-                                <!--<button type="button" class="btn btn-primary btn-info " onclick = "location.href = 'appointment.php?action=edit&appointment_id=<?php echo $row['appointment_id'];?>&view=1'">View</button>-->
+
+
+                                <button type="button" class="btn btn-primary btn-info small_radius_button " onclick = "location.href = 'booking.php?action=edit&book_id=<?php echo $row['book_id'];?>'">View</button>
+                                <button type="button" class="btn btn-primary btn-warning small_radius_button " onclick = "confirmAlertHref('booking.php?action=cancelAppointment&book_id=<?php echo $row['book_id'];?>','Confirm Cancel?')">Cancel</button>
                                 <?php
                                 if($row['appointment_confirm'] == 0 || $row['appointment_confirm'] == 3){?>
-                                <button type="button" class="btn btn-primary btn-danger " onclick = "confirmAlertHref('booking.php?action=rejectAppointment&book_id=<?php echo $row['book_id'];?>','Confirm Reject?')">Rejected</button>
+                                <button type="button" class="btn btn-primary btn-danger small_radius_button " onclick = "confirmAlertHref('booking.php?action=rejectAppointment&book_id=<?php echo $row['book_id'];?>','Confirm Reject?')">Reject</button>
                                 <?php }?>
-                                <button type="button" class="btn btn-primary btn-info " onclick = "location.href = 'booking.php?action=edit&book_id=<?php echo $row['book_id'];?>'">View</button>
-                                <button type="button" class="btn btn-primary btn-warning " onclick = "confirmAlertHref('booking.php?action=cancelAppointment&book_id=<?php echo $row['book_id'];?>','Confirm Cancel?')">Cancel</button>
                                 <?php // }?>
                             </td>
                         </tr>
@@ -476,7 +470,9 @@ class Booking {
                         <th style = 'width:10%'>Name</th>
                         <th style = 'width:10%'>Telephone</th>
                         <th style = 'width:10%'>Email</th>
-                        <th style = 'width:10%'>Service</th>
+
+
+
                         <th style = 'width:15%'>Location</th>
                         <th style = 'width:10%'>Date</th>
                         <th style = 'width:10%'>Time</th>
@@ -520,7 +516,7 @@ class Booking {
 
                 }
             });
-        
+
         //    var data = "action=confirmedAppointment&appointment_array="+book_id+"&appointment_status_array="+book_status;
     //    var data = "action=confirmedAppointment&appointment_array="+appointment_id+"&appointment_status_array="+appointment_status;
 
